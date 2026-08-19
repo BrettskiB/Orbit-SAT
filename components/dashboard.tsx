@@ -98,7 +98,7 @@ export function Dashboard() {
         </nav>
         <div className="side-bottom">
           <button onClick={() => navigate("Settings")}><Icon name="settings" /><span>Settings</span></button>
-          <div className="profile"><button className="avatar" aria-label="Open profile" onClick={()=>navigate("Profile")}>{`${profile.name[0]||""}${profile.lastName?.[0]||profile.name[1]||""}`.toUpperCase()}</button><div><strong>{profile.name}{profile.lastName?` ${profile.lastName}`:""}</strong><span>{profile.targetScore} target</span></div><button aria-label="Edit profile" onClick={()=>navigate("Profile")}>•••</button></div>
+          <button className="profile" aria-label="Open profile" onClick={()=>navigate("Profile")}><span className="avatar">{`${profile.name[0]||""}${profile.lastName?.[0]||profile.name[1]||""}`.toUpperCase()}</span><div><strong>{profile.name}{profile.lastName?` ${profile.lastName}`:""}</strong><span>{profile.targetScore} target</span></div></button>
         </div>
       </aside>
 
@@ -128,7 +128,6 @@ export function Dashboard() {
               <h1>{greeting}, {profile.name}.</h1>
               <p>{todayQuestions?`You’ve completed ${todayQuestions} question${todayQuestions===1?"":"s"} today. ${Math.max(0,dailyGoal-todayQuestions)} remain in your daily goal.`:streak?`One focused session today keeps your ${streak}-day streak alive.`:"A short focused session is enough to start today’s momentum."}</p>
               <div className="hero-actions">
-                <button className="primary" onClick={() => navigate("Learn")}><Icon name="play" size={17} /> Continue learning</button>
                 <button className="hero-link" onClick={()=>navigate("Diagnostic")}>{diagnostic?"View diagnostic":"Take diagnostic"}</button>
                 <span><Icon name="clock" size={17} /> {minutesLeft} min planned</span>
               </div>
@@ -141,7 +140,7 @@ export function Dashboard() {
             <div className="lesson-art"><span>ax²</span><i>+ bx + c</i><b>04</b></div>
             <div className="lesson-copy"><span>ADVANCED MATH · LESSON 3 OF 5</span><h2>Quadratic equations</h2><p>Complete the square and reveal the vertex.</p></div>
             <div className="lesson-progress"><i><em /></i><span>62%</span></div>
-            <button className="secondary" onClick={() => navigate("Learn")}>Resume lesson <span>→</span></button>
+            <button className="primary" onClick={() => navigate("Learn")}>Resume lesson <span>→</span></button>
           </section>
 
           <section className="stats card">
