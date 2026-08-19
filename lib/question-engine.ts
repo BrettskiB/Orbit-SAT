@@ -1,0 +1,48 @@
+export type QuestionDomain="Algebra"|"Advanced Math"|"Problem Solving & Data"|"Geometry & Trig";
+export type QuestionDifficulty="Foundations"|"Medium"|"Challenge"|"Adaptive"|string;
+export type EngineQuestion={id:string;prompt:string;answers:string[];correct:number;explain:string;domain:QuestionDomain;skill:string;difficulty:string;templateId:string;templateVersion:number;seed:number;params:Record<string,number|string>;responseType?:"multiple-choice"|"student-response"};
+type Draft={prompt:string;correctAnswer:string;distractors:string[];explain:string;skill:string;params:Record<string,number|string>};
+type Template={id:string;version:number;domain:QuestionDomain;skill:string;build:(random:Random,difficulty:string)=>Draft};
+
+class Random{
+  constructor(private state:number){}
+  next(){let t=this.state+=0x6d2b79f5;t=Math.imul(t^t>>>15,t|1);t^=t+Math.imul(t^t>>>7,t|61);return((t^t>>>14)>>>0)/4294967296}
+  int(min:number,max:number){return Math.floor(this.next()*(max-min+1))+min}
+  pick<T>(items:T[]){return items[this.int(0,items.length-1)]}
+  shuffle<T>(items:T[]){const next=[...items];for(let i=next.length-1;i>0;i--){const j=this.int(0,i);[next[i],next[j]]=[next[j],next[i]]}return next}
+}
+const range=(difficulty:string)=>difficulty==="Foundations"?{small:5,large:10}:difficulty==="Challenge"?{small:14,large:30}:{small:9,large:18};
+const money=(value:number)=>`$${Number.isInteger(value)?value:value.toFixed(2)}`;
+const draft=(skill:string,prompt:string,correctAnswer:string,distractors:string[],explain:string,params:Draft["params"]):Draft=>({skill,prompt,correctAnswer,distractors,explain,params});
+
+const templates:Template[]=[
+  {id:"alg.linear.one-step",version:1,domain:"Algebra",skill:"Linear equations",build:(r,d)=>{const n=range(d),x=r.int(2,n.small),a=r.int(2,n.small),b=r.int(1,n.large),c=a*x+b;return draft("Linear equations",`Solve ${a}x + ${b} = ${c}.`,String(x),[String(x+1),String(c-b),String(Math.max(1,x-1))],`Subtract ${b}, then divide by ${a}: x = (${c} − ${b})/${a} = ${x}.`,{a,b,c,x})}},
+  {id:"alg.slope.evaluate",version:1,domain:"Algebra",skill:"Slope & graphs",build:(r,d)=>{const n=range(d),m=r.int(2,n.small),x=r.int(1,n.small),b=r.int(-n.small,n.small),y=m*x+b;return draft("Slope & graphs",`For y = ${m}x ${b<0?"−":"+"} ${Math.abs(b)}, what is y when x = ${x}?`,String(y),[String(y+m),String(m+b),String(m*x)],`Substitute x = ${x}: y = ${m}(${x}) ${b<0?"−":"+"} ${Math.abs(b)} = ${y}.`,{m,x,b,y})}},
+  {id:"alg.system.context",version:1,domain:"Algebra",skill:"Systems",build:(r,d)=>{const n=range(d),adult=r.int(8,n.large),student=r.int(4,adult-1),count=r.int(2,n.small),total=adult+student*count;return draft("Systems",`One adult ticket and ${count} student tickets cost $${total}. If the adult ticket costs $${adult}, what is one student ticket?`,money(student),[money(total-adult),money(student+1),money(adult-student)],`Subtract the adult ticket, then divide the remaining $${student*count} by ${count}.`,{adult,student,count,total})}},
+  {id:"advanced.factor",version:1,domain:"Advanced Math",skill:"Factoring",build:(r,d)=>{const n=range(d),p=r.int(1,n.small),q=r.int(p+1,n.small+3),sum=p+q,product=p*q;return draft("Factoring",`Which expression is equivalent to x² + ${sum}x + ${product}?`,`(x + ${p})(x + ${q})`,[`(x − ${p})(x − ${q})`,`(x + ${sum})(x + ${product})`,`(x − ${p})(x + ${q})`],`The two constants must multiply to ${product} and add to ${sum}.`,{p,q,sum,product})}},
+  {id:"advanced.function.evaluate",version:1,domain:"Advanced Math",skill:"Function notation",build:(r,d)=>{const n=range(d),a=r.int(2,n.small),x=r.int(2,n.small),b=r.int(1,n.large),value=a*x*x-b;return draft("Function notation",`If f(x) = ${a}x² − ${b}, what is f(${x})?`,String(value),[String(a*x-b),String(value+b),String(value+a)],`Substitute ${x}: ${a}(${x}²) − ${b} = ${value}.`,{a,x,b,value})}},
+  {id:"advanced.exponents.product",version:1,domain:"Advanced Math",skill:"Exponents",build:(r,d)=>{const n=range(d),a=r.int(2,n.small),b=r.int(2,n.small),sum=a+b;return draft("Exponents",`Which expression is equivalent to x^${a} · x^${b}?`,`x^${sum}`,[`x^${a*b}`,`2x^${sum}`,`x^${Math.abs(a-b)}`],`Powers with the same base multiply by adding their exponents: ${a} + ${b} = ${sum}.`,{a,b,sum})}},
+  {id:"data.percent.change",version:1,domain:"Problem Solving & Data",skill:"Percent change",build:(r,d)=>{const n=range(d),original=r.int(4,n.large)*10,percent=r.pick([10,20,25,40,50]),increase=original*percent/100,total=original+increase;return draft("Percent change",`A price of $${original} increases by ${percent}%. What is the new price?`,money(total),[money(increase),money(original-increase),money(original+percent)],`${percent}% of ${original} is ${increase}; add it to the original price.`,{original,percent,increase,total})}},
+  {id:"data.mean",version:1,domain:"Problem Solving & Data",skill:"Statistics",build:(r,d)=>{const n=range(d),middle=r.int(4,n.large),gap=r.int(2,n.small),values=[middle-gap,middle,middle+gap];return draft("Statistics",`What is the mean of ${values.join(", ")}?`,String(middle),[String(middle+gap),String(values.reduce((a,b)=>a+b,0)),String(middle-gap)],`The values total ${middle*3}; divide by 3 to get ${middle}.`,{middle,gap,values:values.join(",")})}},
+  {id:"data.ratio.scale",version:1,domain:"Problem Solving & Data",skill:"Ratios",build:(r,d)=>{const n=range(d),a=r.int(2,n.small),b=r.int(a+1,n.small+3),scale=r.int(2,n.small),known=a*scale,answer=b*scale;return draft("Ratios",`The ratio of red to blue tiles is ${a}:${b}. If there are ${known} red tiles, how many are blue?`,String(answer),[String(a+b),String(b+scale),String(a*b)],`The scale factor is ${known}/${a} = ${scale}; multiply ${b} by ${scale}.`,{a,b,scale,known,answer})}},
+  {id:"geo.right-triangle",version:1,domain:"Geometry & Trig",skill:"Right triangles",build:(r,d)=>{const n=range(d),scale=r.int(1,Math.max(2,Math.floor(n.small/2))),a=3*scale,b=4*scale,c=5*scale;return draft("Right triangles",`A right triangle has legs ${a} and ${b}. What is its hypotenuse?`,String(c),[String(a+b),String(c+scale),String(b)],`Use a² + b² = c². This is a ${scale===1?"":"scaled "}3-4-5 triangle, so c = ${c}.`,{a,b,c,scale})}},
+  {id:"geo.circle.area",version:1,domain:"Geometry & Trig",skill:"Circles",build:(r,d)=>{const n=range(d),radius=r.int(2,n.small),square=radius*radius;return draft("Circles",`A circle has radius ${radius}. What is its area?`,`${square}π`,[`${radius*2}π`,`${square*2}π`,`${radius}π`],`Area is πr². With r = ${radius}, the area is ${square}π.`,{radius,square})}},
+  {id:"geo.supplementary",version:1,domain:"Geometry & Trig",skill:"Angles",build:(r)=>{const angle=r.int(4,14)*10,answer=180-angle;return draft("Angles",`Two angles are supplementary. If one is ${angle}°, what is the other?`,`${answer}°`,[`${90-angle}°`,`${angle}°`,`${180+angle}°`],`Supplementary angles total 180°, so 180 − ${angle} = ${answer}°.`,{angle,answer})}}
+];
+
+export function validateQuestion(question:EngineQuestion){const issues:string[]=[];if(!question.prompt.trim())issues.push("Empty prompt");if(question.answers.length!==4)issues.push("Not four choices");if(new Set(question.answers).size!==4)issues.push("Duplicate choices");if(question.correct<0||question.correct>3)issues.push("Invalid answer index");if(!question.explain.trim())issues.push("Missing explanation");if(!question.templateId||!question.templateVersion)issues.push("Missing provenance");return issues}
+
+export function generateQuestionSet(count=3,domain:string="Advanced Math",difficulty:string="Adaptive",seed=Date.now()>>>0):EngineQuestion[]{
+  const normalized=(domain.includes("Geometry")?"Geometry & Trig":domain) as QuestionDomain;
+  const available=templates.filter(template=>template.domain===normalized);
+  if(!available.length)throw new Error(`Unsupported question domain: ${domain}`);
+  const random=new Random(seed);const result:EngineQuestion[]=[];let attempts=0;
+  while(result.length<count&&attempts<count*20){attempts++;const template=random.pick(available),itemSeed=random.int(1,2147483646),itemRandom=new Random(itemSeed),built=template.build(itemRandom,difficulty);const raw=[built.correctAnswer,...built.distractors];const unique=Array.from(new Set(raw));if(unique.length!==4)continue;const answers=itemRandom.shuffle(unique),correct=answers.indexOf(built.correctAnswer),studentResponse=["alg.linear.one-step","alg.slope.evaluate","advanced.function.evaluate","data.mean","geo.right-triangle","geo.supplementary"].includes(template.id)&&itemSeed%4===0;const question:EngineQuestion={id:`${template.id}:v${template.version}:${itemSeed}`,prompt:built.prompt,answers,correct,explain:built.explain,domain:normalized,skill:built.skill,difficulty,templateId:template.id,templateVersion:template.version,seed:itemSeed,params:built.params,responseType:studentResponse?"student-response":"multiple-choice"};if(!validateQuestion(question).length)result.push(question)
+  }
+  if(result.length<count)throw new Error(`Could not generate ${count} valid ${normalized} questions.`);
+  return result;
+}
+
+export function recreateQuestion(templateId:string,seed:number,difficulty="Adaptive"){const template=templates.find(item=>item.id===templateId);if(!template)throw new Error(`Unknown template: ${templateId}`);const random=new Random(seed),built=template.build(random,difficulty),answers=random.shuffle([built.correctAnswer,...built.distractors]);return{...built,answers,correct:answers.indexOf(built.correctAnswer),templateId,templateVersion:template.version,seed,domain:template.domain,difficulty}}
+
+export const questionEngineInfo={version:1,templateCount:templates.length,domains:Array.from(new Set(templates.map(item=>item.domain)))};

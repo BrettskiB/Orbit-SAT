@@ -1,0 +1,2 @@
+"use client";
+export default function GlobalError({reset}:{error:Error&{digest?:string};reset:()=>void}){return <main className="error-state"><div><span>ORBIT RECOVERY</span><h1>That study screen hit a snag.</h1><p>Your saved local progress is still available. Try reloading this screen; if the problem continues, return to the dashboard.</p><button onClick={reset}>Try again</button><a href="/">Return to dashboard</a></div></main>}
