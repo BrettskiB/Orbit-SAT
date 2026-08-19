@@ -138,7 +138,7 @@ export function Dashboard() {
 
           <section className="continue-card card">
             <div className="card-label"><span>UP NEXT</span></div>
-            <div className="lesson-art"><span>x²</span><i>+ bx + c</i><b>04</b></div>
+            <div className="lesson-art"><span>ax²</span><i>+ bx + c</i><b>04</b></div>
             <div className="lesson-copy"><span>ADVANCED MATH · LESSON 3 OF 5</span><h2>Quadratic equations</h2><p>Complete the square and reveal the vertex.</p></div>
             <div className="lesson-progress"><i><em /></i><span>62%</span></div>
             <button className="secondary" onClick={() => navigate("Learn")}>Resume lesson <span>→</span></button>
