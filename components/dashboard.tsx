@@ -163,7 +163,7 @@ export function Dashboard() {
 
           <section className="continue-card card">
             <div className="card-label"><span>UP NEXT</span></div>
-            <div className="lesson-art"><span>ax² + bx + c</span><b>04</b></div>
+            <div className="lesson-art"><span className="lesson-equation" role="img" aria-label="a x squared plus b x plus c"><span>ax<sup>2</sup></span><span className="lesson-operator" aria-hidden="true">+</span><span>bx</span><span className="lesson-operator" aria-hidden="true">+</span><span>c</span></span><b>04</b></div>
             <div className="lesson-copy"><span>ADVANCED MATH · LESSON 3 OF 5</span><h2>Quadratic equations</h2><p>Complete the square and reveal the vertex.</p></div>
             <div className="lesson-progress"><i><em /></i><span>62%</span></div>
             <button className="primary" onClick={() => navigate("Learn")}>Resume lesson <span>→</span></button>
