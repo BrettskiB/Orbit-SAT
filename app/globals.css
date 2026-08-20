@@ -229,3 +229,78 @@ button { font:inherit; }
   .mode-system .environment-layer:after{background:#05070c28}
 }
 @media(max-width:620px){.appearance-accordion-toggle{padding:19px 17px}.appearance-accordion-body{padding:0 17px 21px}.text-color-settings>header{align-items:flex-start;flex-direction:column}.text-color-settings>header>button{align-self:flex-start}}
+
+/* Unified settings rhythm and responsive surface sizing. */
+.settings-page-shell{
+  --settings-gap:clamp(12px,1.4vw,18px);
+  --settings-pad:clamp(20px,2.5vw,28px);
+  width:min(100%,1180px);
+  margin:0 auto;
+  padding:clamp(28px,4vw,46px) clamp(16px,4vw,48px) clamp(48px,6vw,75px);
+  display:grid;
+  gap:var(--settings-gap);
+}
+.appearance-settings{width:100%;max-width:none;display:grid;gap:var(--settings-gap)}
+.appearance-settings>.card{width:100%;margin:0}
+.settings-page-shell>.accessibility-wrap,
+.settings-page-shell>.account-controls-wrap,
+.settings-page-shell>.quality-entry-wrap,
+.settings-page-shell>.data-controls-wrap{width:100%;margin:0;padding:0}
+.settings-page-shell .page-heading{
+  display:block;
+  width:100%;
+  max-width:none;
+  padding:var(--settings-pad);
+  border:1px solid color-mix(in srgb,var(--line) 76%,transparent);
+  border-radius:13px;
+  background:color-mix(in srgb,var(--surface,#fff) 84%,transparent);
+  box-shadow:0 10px 32px #0b142018;
+  backdrop-filter:blur(14px) saturate(1.1);
+}
+.settings-page-shell .page-heading p{max-width:720px}
+.settings-page-shell .appearance-section,
+.settings-page-shell .settings-direct-card{padding:var(--settings-pad)}
+.settings-page-shell .appearance-accordion-toggle,
+.settings-page-shell .settings-disclosure>summary{padding:var(--settings-pad)}
+.settings-page-shell .appearance-accordion-body,
+.settings-page-shell .settings-disclosure-body{padding:0 var(--settings-pad) var(--settings-pad)}
+.settings-page-shell .appearance-accordion-body>header{padding-top:var(--settings-pad)}
+.settings-page-shell .settings-disclosure-body{padding-top:var(--settings-pad)}
+.settings-direct-card{display:flex;align-items:center;justify-content:space-between;gap:clamp(18px,3vw,36px)}
+.settings-direct-card>div:first-child{min-width:0;max-width:760px}
+.settings-direct-card h2{font:650 18px "Manrope";margin:5px 0}
+.settings-direct-card p{margin:0;color:var(--muted);font-size:10px;line-height:1.6}
+.settings-direct-card>button,
+.settings-direct-card>a,
+.settings-direct-card>.goal-buttons{flex:0 0 auto}
+.settings-direct-card>button{border:1px solid var(--line);background:var(--surface,#fff);color:var(--ink);border-radius:7px;padding:10px 13px;cursor:pointer}
+.settings-direct-card>button.toggle-on{background:var(--nav);border-color:var(--nav);color:var(--nav-text,#fff)}
+.settings-link-card>a,
+.settings-page-shell .quality-entry>a{background:var(--nav);color:var(--nav-text,#fff);text-decoration:none;border-radius:7px;padding:11px 15px;font-size:10px;white-space:nowrap}
+.settings-page-shell .quality-entry{background:color-mix(in srgb,var(--surface,#fff) 90%,transparent)}
+.settings-page-shell .account-controls{padding:var(--settings-pad)}
+.settings-page-shell .account-controls>button{white-space:nowrap}
+.settings-page-shell .goal-buttons button{min-width:44px;min-height:42px}
+.settings-page-shell .goal-buttons button.selected{color:var(--nav-text,#fff)}
+.settings-page-shell .settings-disclosure{width:100%}
+
+/* Keep content fluid without letting grids or media force horizontal overflow. */
+.content,.dashboard-grid,.product-page,.practice-shell,.settings-page-shell{min-width:0;width:100%}
+.dashboard-grid,.product-page{padding-left:clamp(16px,4vw,48px);padding-right:clamp(16px,4vw,48px)}
+.dashboard-grid>*,.catalog-grid>*,.lesson-layout>*,.progress-summary>*,.social-grid>*,.profile-layout>*,.card{min-width:0;max-width:100%}
+img,video,canvas{max-width:100%;height:auto}
+.card h1,.card h2,.card h3,.page-heading h1,.page-heading p{overflow-wrap:anywhere}
+
+@media(max-width:1100px){
+  .dashboard-grid{grid-template-columns:minmax(0,1fr)}
+  .continue-card{grid-row:auto}
+  .path,.coach{grid-column:1}
+}
+@media(max-width:700px){
+  .settings-direct-card{align-items:flex-start;flex-direction:column}
+  .settings-direct-card>button,.settings-direct-card>a{align-self:flex-start}
+  .settings-direct-card>.goal-buttons{width:100%}
+  .settings-direct-card>.goal-buttons button{flex:1}
+  .settings-page-shell .segmented-control{width:100%}
+  .settings-page-shell .segmented-control button{min-width:0;flex:1;padding-inline:8px}
+}
