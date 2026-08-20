@@ -347,3 +347,126 @@ img,video,canvas{max-width:100%;height:auto}
 @media(max-width:620px){
   .progress-page-shell{padding-top:27px;padding-bottom:40px;gap:14px}
 }
+
+/* Readable typography and calmer spacing across primary product surfaces. */
+.main-space :where(.page-heading>span,.micro-label,.eyebrow,.section-heading span,.card-label>span){
+  font-size:11px;
+  line-height:1.35;
+}
+.main-space .page-heading h1{
+  font-size:clamp(29px,3vw,38px);
+  line-height:1.12;
+}
+.main-space .page-heading p{
+  max-width:760px;
+  font-size:14px;
+  line-height:1.6;
+}
+.main-space .content>.product-page>.page-heading,
+.main-space .progress-page-shell>.product-page:first-child>.page-heading{
+  padding:clamp(20px,2vw,26px);
+}
+.main-space :where(input,select,textarea){font-size:14px}
+.daily>span{font-size:10px}
+.lesson-copy span,.module-name small,.catalog-copy>small{font-size:10px}
+.ring-inner span,.module-icon{font-size:10px}
+.stat-grid>div>span,.catalog-copy>div span{font-size:10px}
+.stat-grid>div>small,.catalog-copy p{font-size:12px}
+.plan-task small{font-size:10px}
+.plan-task p{font-size:12px;line-height:1.45}
+.plan-signals span{font-size:10px}
+.plan-signals small{font-size:11px;line-height:1.45}
+.plan-overview>div:first-child>span,.today-head span,.planner-note span{font-size:10px}
+.mode-feature>span,.adaptive-tags i,.social-feature>span{font-size:11px}
+.settings-page-shell :where(small,.settings-direct-card p){font-size:11px;line-height:1.5}
+.settings-page-shell .layout-option :where(small,span){font-size:11px}
+.settings-page-shell .layout-grid>.layout-option>span{font-size:11px}
+.settings-page-shell .accessibility-options :where(label,button),.settings-page-shell .data-summary span{font-size:11px}
+.settings-page-shell :where(.settings-link-card>a,.quality-entry>a){font-size:12px}
+.settings-page-shell .danger-zone :where(span,button){font-size:11px;line-height:1.45}
+
+/* Progress: let cards fit their content and keep supporting data legible. */
+.growth-report-wrap{
+  grid-template-columns:minmax(0,1.35fr) minmax(320px,.85fr);
+  align-items:start;
+}
+.growth-report,.achievements{padding:26px}
+.progress-page-shell :where(small,.insight-meta,.context-note){font-size:11px;line-height:1.45}
+.progress-page-shell p{font-size:12px;line-height:1.5}
+.score-panel>span,.review-panel>div>span,.empty-skills>span{font-size:11px}
+.activity-chart small{font-size:10px}
+.context-insights .section-heading>small,.achievements .section-heading>small,.goal-center .section-heading>small{font-size:11px}
+.streak-recovery>div>span{font-size:10px}
+.growth-metrics span{font-size:10px;line-height:1.35}
+.growth-metrics small{font-size:11px}
+.weekly-trend strong,.weekly-trend span{font-size:11px}
+.achievements>div:last-child{gap:10px;margin-top:18px}
+.achievements article{grid-template-columns:36px 1fr;gap:12px;padding:13px 14px}
+.achievements article>span{width:34px;height:34px}
+.achievements article strong{font-size:13px}
+.achievements article small{font-size:11px;line-height:1.4}
+.skill-grid article strong,.context-performance article span{font-size:12px}
+.skill-grid article small,.context-performance footer small{font-size:11px}
+.goal-progress span,.goal-suggestion span,.streak-recovery small,.personal-records article span{font-size:11px}
+.goal-suggestion strong,.streak-recovery strong{font-size:12px}
+.goal-suggestion,.streak-recovery{padding:15px 16px}
+
+/* Explore Paths: introduce a real section gap and use reading-size copy. */
+.career-layout,.profile-layout{margin-top:18px}
+.career-layout{grid-template-columns:300px minmax(0,1fr)}
+.career-list{gap:10px}
+.career-list button{grid-template-columns:42px 1fr auto;gap:13px;padding:14px 15px}
+.career-list button>span{width:42px;height:42px}
+.career-list button strong{font-size:14px;line-height:1.3}
+.career-list button small{font-size:11px;line-height:1.35}
+.career-detail{padding:28px}
+.career-detail h2{font-size:27px;line-height:1.2}
+.career-detail header p{font-size:14px;line-height:1.55}
+.career-rule{font-size:12px;line-height:1.5}
+.connection-table>div{font-size:10px;line-height:1.4}
+.connection-table article strong{font-size:13px}
+.connection-table article p{font-size:12px;line-height:1.5}
+.career-detail>footer strong{font-size:13px}
+.career-detail>footer span{font-size:11px;line-height:1.45}
+
+/* Profile: compact the identity card and group each score with its label. */
+.profile-layout{grid-template-columns:280px minmax(0,1fr);align-items:start}
+.profile-identity{padding:28px 24px}
+.profile-avatar-hero{width:82px;height:82px;margin-bottom:16px;font-size:24px}
+.profile-identity h2{font-size:20px;line-height:1.25}
+.profile-identity>p{font-size:14px;line-height:1.4}
+.profile-identity>small{font-size:11px}
+.profile-identity>.profile-score-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+  margin-top:24px;
+  padding-top:20px;
+}
+.profile-score{display:grid;align-content:start;gap:6px;min-width:0}
+.profile-identity>.profile-score-grid .profile-score span{font-size:10px;letter-spacing:1px;color:var(--muted)}
+.profile-identity>.profile-score-grid .profile-score b{font:700 18px/1.3 "Manrope";overflow-wrap:normal;word-break:normal}
+.profile-settings{padding:26px}
+.profile-settings-head h2{font-size:22px}
+.profile-settings-head p,.interest-map header p{font-size:13px;line-height:1.55}
+.profile-fields label,.school-fields label{font-size:11px;line-height:1.35}
+.school-fields small{font-size:11px;line-height:1.4}
+.interest-group>strong,.learning-styles>strong,.context-mode>strong{font-size:10px;line-height:1.45}
+.interest-group button,.learning-styles button,.context-mode button,.profile-days button{font-size:11px}
+.profile-days>span{font-size:10px}
+.profile-settings footer small{font-size:11px;line-height:1.4}
+
+@media(max-width:1000px){
+  .profile-layout{grid-template-columns:1fr}
+}
+@media(max-width:950px){
+  .growth-report-wrap{grid-template-columns:1fr}
+  .career-layout{grid-template-columns:1fr}
+}
+@media(max-width:620px){
+  .main-space .page-heading h1{font-size:clamp(27px,7.4vw,31px)}
+  .main-space .page-heading p{font-size:13px}
+  .career-layout,.profile-layout{margin-top:14px}
+  .career-detail,.profile-settings,.growth-report,.achievements{padding:22px 18px}
+  .sidebar nav span{font-size:10px!important}
+}
