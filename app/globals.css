@@ -553,3 +553,15 @@ img,video,canvas{max-width:100%;height:auto}
   .profile-masthead-scores>div{padding:2px 14px}
   .profile-masthead-scores b{font-size:17px}
 }
+
+/* Keep sidebar initials centered and independent from profile-copy styling. */
+.side-bottom>.profile>.avatar{
+  display:grid;
+  place-items:center;
+  flex:none;
+  margin:0;
+  padding:0;
+  color:#623d2e;
+  line-height:1;
+  text-align:center;
+}
