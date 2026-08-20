@@ -291,6 +291,46 @@ button { font:inherit; }
 img,video,canvas{max-width:100%;height:auto}
 .card h1,.card h2,.card h3,.page-heading h1,.page-heading p{overflow-wrap:anywhere}
 
+/* Keep every primary section on the same visual grid. */
+.main-space .content>.product-page>.page-heading,
+.main-space .progress-page-shell>.product-page:first-child>.page-heading{
+  display:block;
+  width:100%;
+  max-width:none;
+  padding:clamp(20px,2.5vw,28px);
+}
+.progress-page-shell{
+  width:100%;
+  max-width:1240px;
+  margin:0 auto;
+  padding:46px clamp(16px,4vw,48px) 75px;
+  display:grid;
+  gap:18px;
+}
+.progress-page-shell>.product-page{
+  width:100%;
+  max-width:none;
+  margin:0;
+  padding:0;
+}
+.progress-page-shell>.skill-insights-wrap,
+.progress-page-shell>.context-insights-wrap,
+.progress-page-shell>.growth-report-wrap,
+.progress-page-shell>.goal-center-wrap{margin:0}
+
+/* Shared glass cards must not wash out intentionally dark summary surfaces. */
+.main-space .score-panel.card,
+.main-space .plan-overview.card{
+  background:color-mix(in srgb,var(--nav) 92%,var(--surface,#fff));
+  color:#fff;
+  border-color:color-mix(in srgb,var(--nav) 72%,#fff);
+  box-shadow:0 10px 30px #0c14201f;
+}
+.main-space .plan-overview.card h2{color:#fff}
+.main-space .plan-overview.card>div:first-child>span,
+.main-space .plan-overview.card p{color:#d2d9e5}
+.plan-signals>article:only-child{grid-column:1/-1}
+
 @media(max-width:1100px){
   .dashboard-grid{grid-template-columns:minmax(0,1fr)}
   .continue-card{grid-row:auto}
@@ -303,4 +343,7 @@ img,video,canvas{max-width:100%;height:auto}
   .settings-direct-card>.goal-buttons button{flex:1}
   .settings-page-shell .segmented-control{width:100%}
   .settings-page-shell .segmented-control button{min-width:0;flex:1;padding-inline:8px}
+}
+@media(max-width:620px){
+  .progress-page-shell{padding-top:27px;padding-bottom:40px;gap:14px}
 }

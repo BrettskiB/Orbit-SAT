@@ -138,7 +138,7 @@ export function Dashboard() {
 
         {active === "Learn" && <LearnView onPractice={() => navigate("Practice")} learningStyles={profile.learningStyles||[]} />}
         {active === "Practice" && <PracticeView onComplete={completePractice} missedItems={stats.missedItems} onSimulation={()=>navigate("Simulation")} onBreakoutChange={setBreakout} recommendation={adaptiveRecommendation} interests={profile.interests||[]} contextMode={profile.contextMode||"balanced"} />}
-        {active === "Progress" && <><ProgressView stats={stats} diagnostic={diagnostic} onReview={()=>navigate("Practice")} /><SkillInsights stats={stats} onHistory={()=>navigate("History")}/><ContextInsights stats={stats} interests={profile.interests||[]}/><GrowthReport stats={stats} diagnostic={diagnostic}/><GoalCenter stats={stats} studyDays={profile.studyDays}/></>}
+        {active === "Progress" && <div className="progress-page-shell"><ProgressView stats={stats} diagnostic={diagnostic} onReview={()=>navigate("Practice")} /><SkillInsights stats={stats} onHistory={()=>navigate("History")}/><ContextInsights stats={stats} interests={profile.interests||[]}/><GrowthReport stats={stats} diagnostic={diagnostic}/><GoalCenter stats={stats} studyDays={profile.studyDays}/></div>}
         {active === "History" && <AttemptHistoryView stats={stats} onBack={()=>navigate("Progress")}/>} 
         {active === "Explore paths" && <CareerExplorerView interests={profile.interests||[]} onPractice={()=>navigate("Practice")}/>} 
         {active === "Study circle" && <StudyCircleView />}
