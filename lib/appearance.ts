@@ -29,8 +29,8 @@ export const standardLayouts: StandardLayout[] = [
 ];
 
 export const appearancePalettes: AppearancePalette[] = [
-  { id: "orbit", name: "Orbit", description: "Coral and navy", accent: "#f4774e", nav: "#111b34", hue: "#f4eee7" },
-  { id: "coastal", name: "Coastal", description: "Teal and ocean blue", accent: "#287f91", nav: "#17384a", hue: "#e8f4f4" },
+  { id: "orbit", name: "Orbit", description: "Coral and navy", accent: "#f4774e", nav: "#111b34", hue: "#f7f5ef" },
+  { id: "coastal", name: "Coastal", description: "Teal and ocean blue", accent: "#287f91", nav: "#17384a", hue: "#edf6f7" },
   { id: "cobalt", name: "Cobalt", description: "Electric blue and ink", accent: "#4f72e8", nav: "#15213f", hue: "#eef2ff" },
   { id: "sage", name: "Sage", description: "Green and evergreen", accent: "#54866d", nav: "#1d352c", hue: "#eef5ef" },
   { id: "amber", name: "Amber", description: "Gold and espresso", accent: "#c67b2e", nav: "#3a2922", hue: "#fbf1e3" },

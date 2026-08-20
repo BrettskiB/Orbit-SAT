@@ -1,4 +1,4 @@
-export const LOCAL_SCHEMA_VERSION=4;
+export const LOCAL_SCHEMA_VERSION=5;
 
 type UnknownRecord=Record<string,unknown>;
 const record=(value:unknown):UnknownRecord=>value&&typeof value==="object"?value as UnknownRecord:{};
